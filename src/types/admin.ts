@@ -59,20 +59,22 @@ export type LegacyReport = Omit<ApprovedReport, "jobSiteId" | "jobSiteName"> & {
   createdAt: string;
 };
 export type LegacyExportRow = {
-  job_site: string;
-  tgl: string | null;
+  tanggal: string | null;
+  nrpp: string | null;
+  nama: string | null;
+  foremen: string | null;
   unit_code: string | null;
   model: string | null;
   hm: string | null;
   problem: string | null;
   activity: string | null;
-  act_start: string | null;
-  act_end: string | null;
+  start: string | null;
+  end: string | null;
   code_job: string | null;
   component: string | null;
   remark: string | null;
   status_unit: string;
-  status_dmar: string;
+  "status laporan": string;
 };
 
 export type AdminUserInput = {

@@ -328,27 +328,26 @@ export function ApprovedReports({
       const selectedSet = new Set(selectedIds);
       const rows = allRows.filter((row) => selectedSet.has(row.id));
       const headers = [
-        "DMAR",
         "Tanggal",
         "Job site",
         "Kode unit",
         "Model",
         "HM",
         "Mekanik",
-        "NRPP Mekanik",
-        "Foreman",
+        "NRPP",
+        "foremen",
         "Problem",
         "Aktivitas",
-        "Mulai",
-        "Selesai",
+        "start",
+        "end",
         "Code Job",
         "Status unit",
+        "status laporan",
         "Component",
         "Remark",
       ];
       const values = rows.map((row) => [
-        row.id,
-        row.date,
+        formatReportDate(row.date),
         row.jobSiteName,
         row.unitCode,
         row.model,
@@ -362,6 +361,7 @@ export function ApprovedReports({
         row.finish,
         row.codeJob,
         row.unitStatus,
+        "Approved",
         row.component,
         row.remark,
       ]);
@@ -373,8 +373,8 @@ export function ApprovedReports({
               headers,
               values,
               [
-                12, 14, 24, 16, 18, 12, 24, 18, 24, 36, 42, 14, 14, 18, 16, 24,
-                42,
+                14, 24, 16, 18, 12, 24, 18, 18, 36, 42, 14, 14, 18, 16, 20,
+                24, 42,
               ],
             );
       const url = URL.createObjectURL(blob);

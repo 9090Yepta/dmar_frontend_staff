@@ -272,20 +272,22 @@ export function LegacyReports({ csrfToken }: { csrfToken: string }) {
         if (result instanceof Blob)
           throw new Error("Data XLSX dari server tidak valid.");
         const headers = [
-          "job_site",
-          "tgl",
+          "tanggal",
+          "nrpp",
+          "nama",
+          "foremen",
           "unit_code",
           "model",
           "hm",
           "problem",
           "activity",
-          "act_start",
-          "act_end",
+          "start",
+          "end",
           "code_job",
           "component",
           "remark",
           "status_unit",
-          "status_dmar",
+          "status laporan",
         ];
         const rows = result.map((row) =>
           headers.map((key) => row[key as keyof typeof row]),
@@ -294,7 +296,7 @@ export function LegacyReports({ csrfToken }: { csrfToken: string }) {
           "Legacy Reports",
           headers,
           rows,
-          [24, 14, 16, 18, 12, 36, 42, 14, 14, 18, 24, 42, 18, 18],
+          [14, 16, 28, 28, 16, 18, 12, 36, 42, 14, 14, 18, 24, 42, 18, 18],
         );
       }
       const url = URL.createObjectURL(blob);

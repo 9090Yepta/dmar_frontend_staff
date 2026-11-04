@@ -12,6 +12,7 @@ import { ForemanHome } from "./features/foreman/ForemanHome";
 import { ForemanHistory } from "./features/foreman/ForemanHistory";
 import { ForemanAccount } from "./features/foreman/ForemanAccount";
 import { ForemanWorkspaceLayout } from "./features/foreman/ForemanWorkspaceLayout";
+import { RouteTransition } from "./components/ui/RouteTransition";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -105,25 +106,27 @@ export default function App({ view }: { view: StaffView }) {
       >
         {workspace.error && <Alert kind="error">{workspace.error}</Alert>}
         {workspace.notice && <Alert kind="success">{workspace.notice}</Alert>}
-        {view === "foreman-history" ? (
-          <ForemanHistory />
-        ) : view === "foreman-account" ? (
-          <ForemanAccount
-            user={workspace.user}
-            passwordBusy={workspace.passwordBusy}
-            profileImageBusy={workspace.profileImageBusy}
-            onChangePassword={workspace.changePassword}
-            onUploadProfileImage={workspace.uploadProfileImage}
-          />
-        ) : (
-          <ForemanHome
-            reports={workspace.reports}
-            loading={workspace.pendingLoading}
-            refreshing={workspace.pendingRefreshing}
-            busy={workspace.busy}
-            onApprove={workspace.approve}
-          />
-        )}
+        <RouteTransition>
+          {view === "foreman-history" ? (
+            <ForemanHistory />
+          ) : view === "foreman-account" ? (
+            <ForemanAccount
+              user={workspace.user}
+              passwordBusy={workspace.passwordBusy}
+              profileImageBusy={workspace.profileImageBusy}
+              onChangePassword={workspace.changePassword}
+              onUploadProfileImage={workspace.uploadProfileImage}
+            />
+          ) : (
+            <ForemanHome
+              reports={workspace.reports}
+              loading={workspace.pendingLoading}
+              refreshing={workspace.pendingRefreshing}
+              busy={workspace.busy}
+              onApprove={workspace.approve}
+            />
+          )}
+        </RouteTransition>
       </ForemanWorkspaceLayout>
     );
   }
@@ -179,7 +182,7 @@ export default function App({ view }: { view: StaffView }) {
         user={workspace.user}
         onSignOut={workspace.signOut}
       >
-        {() => workspaceContent}
+        {() => <RouteTransition>{workspaceContent}</RouteTransition>}
       </AdminWorkspaceLayout>
     );
   }
@@ -187,7 +190,7 @@ export default function App({ view }: { view: StaffView }) {
   return (
     <MainLayout api={workspace.api} pendingCount={workspace.reports.length}>
       {accessCard}
-      {workspaceContent}
+      <RouteTransition>{workspaceContent}</RouteTransition>
     </MainLayout>
   );
 }
